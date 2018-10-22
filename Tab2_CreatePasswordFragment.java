@@ -1,7 +1,5 @@
 package com.spitcomps.passwordmanager;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,12 +61,15 @@ public class Tab2_CreatePasswordFragment extends Fragment {
                     pass.setError("Can't be empty");
                 }else{
                     Toast.makeText(getActivity(),"Adding",Toast.LENGTH_SHORT).show();
-                    NewPassword newPassword=new NewPassword(user,password);
+                    NewPassword newPassword = new NewPassword(user, password, null);
                     currentUserRef.child("Passwords").child(site).setValue(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
                                 Toast.makeText(getActivity(),"Done!",Toast.LENGTH_SHORT).show();
+                                siteName.setText("");
+                                userName.setText("");
+                                pass.setText("");
                             }else{
                                 Toast.makeText(getActivity(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                             }
